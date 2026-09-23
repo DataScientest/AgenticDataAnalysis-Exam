@@ -33,7 +33,7 @@ Même pile LangChain que le repo de pratique `AI-Agents-MLOps-Course`. Les dépe
 
 - `Pages/graph/nodes.py` : `ToolExecutor.batch(ToolInvocation(...), return_exceptions=True)` devient un appel direct `tools_by_name[name].invoke({**args, "graph_state": state})`, avec capture des exceptions (même sémantique ; la boucle agent vers outils, le retour `(message, state_updates)` et l'`InjectedState` sont inchangés). LLM `ChatOpenAI(model="gpt-4o")` rendu configurable pour toute API compatible OpenAI : `LLM_MODEL` (par défaut `openai/gpt-oss-120b`), `LLM_API_BASE` (par défaut Groq), `LLM_API_KEY`.
 - `Pages/graph/tools.py` : suppression de `from langchain_experimental.utilities import PythonREPL` et de `repl = PythonREPL()`, jamais utilisés. Le `exec()` brut est conservé.
-- `requirements.txt`, `requirements-test.txt` : versions épinglées. `pytest-security` est commenté avec une explication.
+- `requirements.txt`, `requirements-test.txt` : versions épinglées. `pytest-security` est commenté avec une explication. `fastapi` est ajouté à `requirements-test.txt`, car `backend/tests/test_api.py` importe `fastapi.testclient` : sans lui, la collecte échouait (`ModuleNotFoundError`).
 - `backend/tests/test_api.py` : `TODO` passé en commentaire (1 ligne).
 - `data_analysis_streamlit_app.py` : le commentaire d'en-tête pointe vers les variables `LLM_*` au lieu d'`OPENAI_API_KEY`.
 - `.env.example` (nouveau) : variables `LLM_*` (Groq par défaut, exemple OpenAI).
@@ -46,7 +46,7 @@ Même pile LangChain que le repo de pratique `AI-Agents-MLOps-Course`. Les dépe
 | `uv run --no-project --python 3.12 --with-requirements requirements.txt --with pytest==9.1.1 pytest -o addopts="" -p no:cacheprovider maintainers/` | **2 passed** : modèle et endpoint lus depuis l'env ; graphe du POC exécuté avec un modèle factice (appel `complete_python_task` sur un CSV, puis réponse finale) |
 | `streamlit run data_analysis_streamlit_app.py` (headless) | `/_stcore/health` = `ok` |
 | `streamlit.testing.AppTest` sur `Pages/python_visualisation_agent.py` | aucune exception |
-| `python -c "import ast; ast.parse(open('backend/tests/test_api.py').read())"` | OK |
+| `pip install -r requirements.txt -r requirements-test.txt && pytest backend/tests/ -v` (commande de l'énoncé, venv neuf) | **1 passed, 19 skipped** (squelettes étudiants) |
 
 Il n'existe **pas de solution de référence** dans le repo : les tests `backend/tests/*` sont des squelettes (`pytest.skip`) destinés aux étudiants.
 

@@ -3,7 +3,8 @@ pytest>=7.0
 pytest-asyncio>=0.21
 pytest-cov>=4.0
 
-# Async HTTP client for API testing
+# API under test + async HTTP client (backend/tests/test_api.py imports fastapi.testclient)
+fastapi>=0.116
 httpx>=0.24
 aiofiles>=23.0
 
