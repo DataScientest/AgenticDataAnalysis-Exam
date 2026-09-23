@@ -35,6 +35,7 @@ Même pile LangChain que le repo de pratique `AI-Agents-MLOps-Course`. Les dépe
 - `Pages/graph/tools.py` : suppression de `from langchain_experimental.utilities import PythonREPL` et de `repl = PythonREPL()`, jamais utilisés. Le `exec()` brut est conservé.
 - `requirements.txt`, `requirements-test.txt` : versions épinglées. `pytest-security` est commenté avec une explication.
 - `backend/tests/test_api.py` : `TODO` passé en commentaire (1 ligne).
+- `data_analysis_streamlit_app.py` : le commentaire d'en-tête pointe vers les variables `LLM_*` au lieu d'`OPENAI_API_KEY`.
 - `.env.example` (nouveau) : variables `LLM_*` (Groq par défaut, exemple OpenAI).
 - `maintainers/test_poc_smoke.py` (nouveau) : test de fumée pour les mainteneurs, hors du périmètre de l'examen (`backend/tests/` et `tests/` restent aux étudiants).
 
