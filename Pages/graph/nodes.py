@@ -5,16 +5,21 @@ from .state import AgentState
 import json
 from typing import Literal
 from .tools import complete_python_task
-from langgraph.prebuilt import ToolInvocation, ToolExecutor
 import os
 
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+# Any OpenAI-compatible API (Groq by default); switch provider/model with environment variables
+llm = ChatOpenAI(
+    model=os.getenv("LLM_MODEL", "openai/gpt-oss-120b"),
+    base_url=os.getenv("LLM_API_BASE", "https://api.groq.com/openai/v1"),
+    api_key=os.getenv("LLM_API_KEY"),
+    temperature=0,
+)
 
 tools = [complete_python_task]
 
 model = llm.bind_tools(tools)
-tool_executor = ToolExecutor(tools)
+tools_by_name = {t.name: t for t in tools}
 
 with open(os.path.join(os.path.dirname(__file__), "../prompts/main_prompt.md"), "r") as file:
     prompt = file.read()
@@ -68,16 +73,13 @@ def call_model(state: AgentState):
 
 def call_tools(state: AgentState):
     last_message = state["messages"][-1]
-    tool_invocations = []
+    responses = []
     if isinstance(last_message, AIMessage) and hasattr(last_message, 'tool_calls'):
-        tool_invocations = [
-            ToolInvocation(
-                tool=tool_call["name"],
-                tool_input={**tool_call["args"], "graph_state": state}
-            ) for tool_call in last_message.tool_calls
-        ]
-
-    responses = tool_executor.batch(tool_invocations, return_exceptions=True)
+        for tool_call in last_message.tool_calls:
+            try:
+                responses.append(tools_by_name[tool_call["name"]].invoke({**tool_call["args"], "graph_state": state}))
+            except Exception as e:
+                responses.append(e)
     tool_messages = []
     state_updates = {}
 
