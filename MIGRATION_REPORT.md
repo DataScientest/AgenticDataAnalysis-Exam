@@ -31,7 +31,7 @@ Même pile LangChain que le repo de pratique `AI-Agents-MLOps-Course`. Les dépe
 
 ## Fichiers modifiés
 
-- `Pages/graph/nodes.py` : `ToolExecutor.batch(ToolInvocation(...), return_exceptions=True)` devient un appel direct `tools_by_name[name].invoke({**args, "graph_state": state})`, avec capture des exceptions (même sémantique ; la boucle agent vers outils, le retour `(message, state_updates)` et l'`InjectedState` sont inchangés). LLM `ChatOpenAI(model="gpt-4o")` rendu configurable pour toute API compatible OpenAI : `LLM_MODEL` (par défaut `openai/gpt-oss-120b`), `LLM_API_BASE` (par défaut Groq), `LLM_API_KEY`.
+- `Pages/graph/nodes.py` : `ToolExecutor.batch(ToolInvocation(...), return_exceptions=True)` devient un appel direct `tools_by_name[name].invoke({**args, "graph_state": state})`, avec capture des exceptions (même sémantique ; la boucle agent vers outils, le retour `(message, state_updates)` et l'`InjectedState` sont inchangés). LLM `ChatOpenAI(model="gpt-4o")` rendu configurable pour toute API compatible OpenAI : `LLM_MODEL` (par défaut `openai/gpt-oss-20b`), `LLM_API_BASE` (par défaut Groq), `LLM_API_KEY`.
 - `Pages/graph/tools.py` : suppression de `from langchain_experimental.utilities import PythonREPL` et de `repl = PythonREPL()`, jamais utilisés. Le `exec()` brut est conservé.
 - `requirements.txt`, `requirements-test.txt` : versions épinglées. `pytest-security` est commenté avec une explication. `fastapi` est ajouté à `requirements-test.txt`, car `backend/tests/test_api.py` importe `fastapi.testclient` : sans lui, la collecte échouait (`ModuleNotFoundError`).
 - `backend/tests/test_api.py` : `TODO` passé en commentaire (1 ligne).

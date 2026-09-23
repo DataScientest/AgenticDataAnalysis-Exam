@@ -10,7 +10,7 @@ import os
 
 # Any OpenAI-compatible API (Groq by default); switch provider/model with environment variables
 llm = ChatOpenAI(
-    model=os.getenv("LLM_MODEL", "openai/gpt-oss-120b"),
+    model=os.getenv("LLM_MODEL", "openai/gpt-oss-20b"),
     base_url=os.getenv("LLM_API_BASE", "https://api.groq.com/openai/v1"),
     api_key=os.getenv("LLM_API_KEY"),
     temperature=0,

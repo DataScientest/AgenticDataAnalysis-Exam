@@ -48,7 +48,7 @@ def chatbot(tmp_path, monkeypatch):
 def test_llm_is_configurable_by_env():
     from Pages.graph import nodes
 
-    assert nodes.llm.model_name == os.getenv("LLM_MODEL", "openai/gpt-oss-120b")
+    assert nodes.llm.model_name == os.getenv("LLM_MODEL", "openai/gpt-oss-20b")
     assert str(nodes.llm.openai_api_base).rstrip("/") == os.getenv(
         "LLM_API_BASE", "https://api.groq.com/openai/v1").rstrip("/")
 
