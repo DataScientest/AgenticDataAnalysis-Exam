@@ -1,8 +1,7 @@
 import os
 os.environ["STREAMLIT_SERVER_MAX_UPLOAD_SIZE"] = "2000"
-# TODO: Load API key from environment variable, not hardcoded
-# This is one of the security issues demonstrated in this exam
-# The LLM is configured with LLM_API_BASE / LLM_API_KEY / LLM_MODEL (see .env.example)
+# The LLM is configured with LLM_API_BASE / LLM_API_KEY / LLM_MODEL environment variables
+# (see .env.example); never hardcode an API key in this file
 import streamlit as st
 
 # Set Streamlit to wide mode
