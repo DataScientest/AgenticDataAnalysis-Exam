@@ -14,7 +14,7 @@ from fastapi.testclient import TestClient
 @pytest.fixture
 async def client():
     """Create async client for API testing."""
-    TODO: Implement after backend creation
+    # TODO: Implement after backend creation
     pass
 
 

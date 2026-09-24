@@ -1,5 +1,4 @@
 from langchain_core.tools import tool
-from langchain_experimental.utilities import PythonREPL
 
 from langchain_core.messages import AIMessage
 from typing import Annotated, Tuple
@@ -14,7 +13,6 @@ import pandas as pd
 import sklearn
 
 
-repl = PythonREPL()
 
 persistent_vars = {}
 plotly_saving_code = """import pickle
