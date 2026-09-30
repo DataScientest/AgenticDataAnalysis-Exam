@@ -10,3 +10,9 @@ __pycache__/
 *.pyo
 *.pyd
 
+
+# Local secrets and test artefacts
+.env
+.venv/
+.coverage
+htmlcov/
